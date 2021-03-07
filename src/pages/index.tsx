@@ -14,14 +14,18 @@ interface HomeProps{
   level:number;
   currentExperience:number;
   challengesCompleted:number;
+  image:string;
+  // imageBase64:string
 }
 export default function Home(props: HomeProps) {
-  console.log(props)
+  console.log("props",props)
   return (
     <ChallengesProvider 
       level={props.level}
       currentExperience={props.currentExperience}
       challengesCompleted={props.challengesCompleted}
+      image={props.image}
+      // imageBase64={props.imageBase64}
     >
       <div className={styles.container}>
         <Head>
@@ -48,12 +52,13 @@ export default function Home(props: HomeProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { level, currentExperience, challengesCompleted } = context.req.cookies
+  const { level, currentExperience, challengesCompleted, image } = context.req.cookies
   return {
     props: {
       level: Number(level),
       currentExperience:Number(currentExperience),
       challengesCompleted:Number(challengesCompleted),
+      image:String(image)
     }
   }
 }

@@ -16,17 +16,21 @@ interface ChallengesContextData {
     challengesCompleted: number;
     experienceToNextLevel: number;
     activieChallenge: Challenge;
+    image: string;
     resetChallenge: () => void;
     completeChallenge: () => void;
     startNewChallenge: () => void;
     levelUp: () => void;
     closeLevelUpodal: () => void;
+    handleImage: (e: any) => void;
+    // save: () => void;
 }
 interface ChallengesProviderProps {
     children: ReactNode;
     level: number;
     currentExperience: number;
     challengesCompleted: number;
+    image: string;
 }
 export const ChallengesContext = createContext({} as ChallengesContextData)
 
@@ -37,11 +41,15 @@ export function ChallengesProvider({
     const [level, setLevel] = useState(rest.level ?? 1)
     const [currentExperience, setCurrentExperience] = useState(rest.currentExperience ?? 0)
     const [challengesCompleted, setChallengesCompleted] = useState(rest.challengesCompleted ?? 0)
+    const [image, setImage] = useState(rest.image?(`https://github.com/EPEduardoPaixao.png`):(null))
+    const [imageBase64, setImageBase64] = useState('')
+    const [img1, setImg] = useState('')
 
     const [activieChallenge, setActiveChallenge] = useState(null)
     const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false)
 
     const experienceToNextLevel = Math.pow((level + 1) * 4, 2)
+
 
     useEffect(() => {
         Notification.requestPermission()
@@ -51,14 +59,45 @@ export function ChallengesProvider({
         Cookies.set('level', String(level))
         Cookies.set('currentExperience', String(currentExperience))
         Cookies.set('challengesCompleted', String(challengesCompleted))
-    }, [level, currentExperience, challengesCompleted])
+        Cookies.set('image', String(image))
+        console.log(image)
+    }, [level, currentExperience, challengesCompleted, image])
+
+    const handleImage = (e: any) => {
+        setImage(URL.createObjectURL(e.target.files[0]))
+        // setImg(e.target.files[0])
+        // setImageBase64(URL.createObjectURL(e.target.files[0]));
+    };
+
+    // const convertbase64 = (file: any) => {
+    //     return new Promise((resolve, reject) => {
+    //         const fileReader = new FileReader();
+    //         fileReader.readAsDataURL(file);
+    //         fileReader.onload = () => {
+    //             resolve(fileReader.result);
+    //         };
+    //         fileReader.onerror = error => {
+    //             reject(error);
+    //         };
+    //     });
+    // };
+    // function cutFromString(oldStrRegex: any, fullStr: any) {
+    //     return fullStr.replace(oldStrRegex, '');
+    //   }
+    // const save = async () => {
+    //     let img: any = await convertbase64(img1)
+    //     let cut = cutFromString(/^data:image.+;base64,/i,img)
+    //     setImage(cut)
+    //     console.log("image",image)
+    // }
+
 
     function levelUp() {
         setLevel(level + 1)
         setIsLevelUpModalOpen(true)
     }
 
-    function closeLevelUpodal(){
+    function closeLevelUpodal() {
         setIsLevelUpModalOpen(false)
     }
 
@@ -100,6 +139,7 @@ export function ChallengesProvider({
     return (
         <ChallengesContext.Provider
             value={{
+                image,
                 level,
                 currentExperience,
                 challengesCompleted,
@@ -109,11 +149,13 @@ export function ChallengesProvider({
                 resetChallenge,
                 startNewChallenge,
                 levelUp,
-                closeLevelUpodal
+                closeLevelUpodal,
+                handleImage,
+                // save,
             }}
         >
             {children}
-            {isLevelUpModalOpen === true ? (<LevelUpmodal/>):(null)}
+            {isLevelUpModalOpen === true ? (<LevelUpmodal />) : (null)}
         </ChallengesContext.Provider>
     )
 }

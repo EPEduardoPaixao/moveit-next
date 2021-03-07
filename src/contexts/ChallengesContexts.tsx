@@ -41,7 +41,7 @@ export function ChallengesProvider({
     const [level, setLevel] = useState(rest.level ?? 1)
     const [currentExperience, setCurrentExperience] = useState(rest.currentExperience ?? 0)
     const [challengesCompleted, setChallengesCompleted] = useState(rest.challengesCompleted ?? 0)
-    const [image, setImage] = useState(rest.image?(`https://github.com/EPEduardoPaixao.png`):(null))
+    const [image, setImage] = useState(rest.image??'')
     const [imageBase64, setImageBase64] = useState('')
     const [img1, setImg] = useState('')
 

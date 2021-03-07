@@ -1,28 +1,33 @@
 .profileContainer{
     display: flex;
     align-items: center;
+    justify-content: space-around;
 }
 
 .profileContainer > label img{
     width: 5.5rem;
     height: 5.5rem;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 .profileContainer div{
     margin-left: 1.5rem;
 }
 
-.profileContainer div strong{
-    font-size: 1.5rem;
-    font-weight: 600;
+/* .profileContainer div strong{
+    font-size: 1.2rem;
+    font-weight: 500;
     color: var(--title);
-}
+} */
 .profileContainer div p{
-    font-size: 1rem;
+    font-size: 2.5rem;
+    font-weight: 500;
     margin-top: 0.5rem;
 }
 
 .profileContainer div p img{
-    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
 }
